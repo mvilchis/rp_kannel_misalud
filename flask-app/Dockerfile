@@ -9,7 +9,6 @@ ENV C_FORCE_ROOT true
 
 # copy source code
 COPY . /flask-app
-COPY ../constants.py /flask-app
 
 WORKDIR /flask-app
 

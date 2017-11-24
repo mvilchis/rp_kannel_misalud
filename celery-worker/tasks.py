@@ -7,7 +7,7 @@ MAX_MESSAGES_VALUE = 1000
 
 env=os.environ
 
-REDIS_HOST = os.getenv('REDIS_PORT_6379_TCP_ADDR','localhost')
+REDIS_HOST = os.getenv('REDIS_PORT_6379_TCP_ADDR','redis')
 REDIS_PORT = int(os.getenv('REDIS_PORT_6379_TCP_PORT',6379))
 redis_url = "redis://%s:%s/0" % (REDIS_HOST, REDIS_PORT)
 

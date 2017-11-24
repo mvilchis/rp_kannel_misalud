@@ -1,4 +1,4 @@
-import os, json, requests, redis
+import os, json, requests, redis, unicodedata
 ##############     Flask libraries     ##############
 from flask import request, url_for
 from flask_api import FlaskAPI
@@ -9,7 +9,7 @@ from worker_proxy import celery
 MESSAGE_KEY="messages"
 MAX_MESSAGES_VALUE = 1000
 
-REDIS_HOST = os.getenv('REDIS_PORT_6379_TCP_ADDR','localhost')
+REDIS_HOST = os.getenv('REDIS_PORT_6379_TCP_ADDR','redis')
 conn = redis.Redis(REDIS_HOST)
 app = FlaskAPI(__name__)
 
@@ -18,7 +18,9 @@ def save_message():
     """
     Send message to task
     """
-    task = celery.send_task('mytasks.save_message_redis', args=[str(request.args.get('to')),request.args.get('text')],kwargs={})
+    text = request.args.get('text')
+    message = unicodedata.normalize('NFD', text).encode('ascii', 'ignore').decode("utf-8")
+    task = celery.send_task('mytasks.save_message_redis', args=[str(request.args.get('to')),message],kwargs={})
     return {'status':'4'}
 
 
