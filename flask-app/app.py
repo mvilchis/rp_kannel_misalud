@@ -25,7 +25,7 @@ def save_message():
 
 
 @app.route("/get_messages", methods=['GET'])
-def get_all_nessage():
+def get_all_messages():
     """
     Send message from redis to client
     """
@@ -35,6 +35,19 @@ def get_all_nessage():
     item = ""
     for i in range(number_of_dics):
         item = json.loads(conn.lpop(MESSAGE_KEY))
+        list_message.append(item)
+    return jsonify({"results":list_message})
+
+@app.route("/show_messages", methods=['GET'])
+def show_queue_messages():
+    """
+    Send message from redis to client
+    """
+    current_length = conn.llen(MESSAGE_KEY)
+    list_message = []
+    item = ""
+    for i in range(current_length):
+        item = json.loads(conn.lindex(MESSAGE_KEY,i))
         list_message.append(item)
     return jsonify({"results":list_message})
 
