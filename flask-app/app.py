@@ -19,8 +19,17 @@ def save_message():
     Send message to task
     """
     text = request.args.get('text')
+    user = request.args.get('from')
+    org = ""
+    if user :
+        if user == MISALUD_USER:
+            org = MISALUD_MODEM
+        elif user == PROSPERA_USER:
+            org = PROSPERA_MODEM
+        elif user == INCLUSION_USER:
+            org == INCLUSION_MODEM
     message = unicodedata.normalize('NFD', text).encode('ascii', 'ignore').decode("utf-8")
-    task = celery.send_task('mytasks.save_message_redis', args=[str(request.args.get('to')),message],kwargs={})
+    task = celery.send_task('mytasks.save_message_redis', args=[str(request.args.get('to')),message,org],kwargs={})
     return {'status':'4'}
 
 
