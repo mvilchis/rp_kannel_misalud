@@ -5,7 +5,7 @@ from flask_api import FlaskAPI
 from flask import jsonify
 #############     My libraries File     #############
 from worker_proxy import celery
-#from constants import *
+from constants import *
 MESSAGE_KEY="messages"
 MAX_MESSAGES_VALUE = 1000
 
