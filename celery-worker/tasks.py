@@ -22,8 +22,8 @@ celery= Celery('tasks',
 
 
 @celery.task(name='mytasks.save_message_redis')
-def save_message_redis(contact_cel, message, org):
+def save_message_redis(contact_cel, message, org, modem_slot):
     #Save message to redis
-    message = {"contact":contact_cel, "message": message, "org": org}
+    message = {"contact":contact_cel, "message": message, "org": org, "modem":modem_slot}
     message_dump = json.dumps(message)
     conn.rpush(MESSAGE_KEY, message_dump)

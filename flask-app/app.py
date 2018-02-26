@@ -29,7 +29,7 @@ def save_message():
         elif user == INCLUSION_USER:
             org == INCLUSION_MODEM
     message = unicodedata.normalize('NFD', text).encode('ascii', 'ignore').decode("utf-8")
-    task = celery.send_task('mytasks.save_message_redis', args=[str(request.args.get('to')),message,org],kwargs={})
+    task = celery.send_task('mytasks.save_message_redis', args=[str(request.args.get('to')),message,org,modem_slot],kwargs={})
     return {'status':'4'}
 
 
