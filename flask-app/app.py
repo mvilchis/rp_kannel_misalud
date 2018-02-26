@@ -19,7 +19,7 @@ def save_message():
     Send message to task
     """
     text = request.args.get('text')
-    user = request.args.get('from')
+    user = request.args.get('username')
     org = ""
     if user :
         if user == MISALUD_USER:
